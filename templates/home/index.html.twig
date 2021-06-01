@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    
+
+    <p>You have register yourself with the following information </p>
+
+    <h1>Serial number: {{cert_serial}}</h1>
+
+    <h3>EMail : {{email}}</h3>
+
+    <h2>CN : {{cn}}</h3>
+
+    
+</div>
+{% endblock %}

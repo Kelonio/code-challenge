@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -27,6 +29,16 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=CertificateSerial::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $certificateSerials;
+
+    public function __construct()
+    {
+        $this->certificateSerials = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,4 +114,35 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    /**
+     * @return Collection|CertificateSerial[]
+     */
+    public function getCertificateSerials(): Collection
+    {
+        return $this->certificateSerials;
+    }
+
+    public function addCertificateSerial(CertificateSerial $certificateSerial): self
+    {
+        if (!$this->certificateSerials->contains($certificateSerial)) {
+            $this->certificateSerials[] = $certificateSerial;
+            $certificateSerial->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCertificateSerial(CertificateSerial $certificateSerial): self
+    {
+        if ($this->certificateSerials->removeElement($certificateSerial)) {
+            // set the owning side to null (unless already changed)
+            if ($certificateSerial->getUser() === $this) {
+                $certificateSerial->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+   
 }

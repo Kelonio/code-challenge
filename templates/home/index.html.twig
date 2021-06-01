@@ -13,11 +13,20 @@
 
     <p>You have register yourself with the following information </p>
 
-    <h1>Serial number: {{cert_serial}}</h1>
+    <h1>Current serial number: {{cert_serial}}</h1>
 
     <h3>EMail : {{email}}</h3>
 
     <h2>CN : {{cn}}</h3>
+
+    <h1>Used serials</h1>
+    <ul>
+        {% for serial in serials %}
+            <li>{{ serial.serial }} visited {{ serial.visit}}</li>
+        {% endfor %}
+    </ul>
+
+
 
     
 </div>
